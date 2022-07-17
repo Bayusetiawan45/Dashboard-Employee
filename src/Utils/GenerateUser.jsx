@@ -41,11 +41,13 @@ const generateUser = (totalUser) => {
       else return generateRandomName(isMale, newName);
     };
     const userList = new Array(totalUser).fill('').map(() => {
+      const key = ~~(Math.random() * 10)
       const isMale = randomBool();
       const age = Math.ceil(Math.random() * 30);
       const name = generateRandomName(isMale);
       const division = divisionList[Math.floor(Math.random() * 4.9)];
       return {
+        key,
         name,
         email: `${name.split(' ').join('.')}@gmail.com`,
         gender: isMale ? 'Male' : 'Female',

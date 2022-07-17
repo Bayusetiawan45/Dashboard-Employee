@@ -8,11 +8,21 @@ import {
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
 import "./Layout.css";
-import React, { useState } from "react";
+import React, {  useState } from "react";
+import { Link } from "react-router-dom";
+import MenuItem from "antd/lib/menu/MenuItem";
+
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [current, setCurrent] = useState("Home");
+
+  const handleChangeRoute = (e) => {
+    setCurrent(e.key);
+  };
+
+
   const AppLayout = (PropsContent) => {
     return (
       <Layout style={{ minHeight: "100vh" }}>
@@ -21,25 +31,19 @@ const MainLayout = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            items={[
-              {
-                key: "1",
-                icon: <HomeOutlined />,
-                label: "Home",
-              },
-              {
-                key: "2",
-                icon: <UserOutlined />,
-                label: "About",
-              },
-              {
-                key: "3",
-                icon: <PhoneOutlined />,
-                label: "Contact",
-              },
-            ]}
-          />
+            onClick={handleChangeRoute}
+            selectedKeys={[current]}
+          >
+            <MenuItem key="home" icon={<HomeOutlined />}>
+              <Link to="/">Home</Link>
+            </MenuItem>
+            <MenuItem key="about" icon={<UserOutlined />}>
+              <Link to="/about">About</Link>
+            </MenuItem>
+            <MenuItem key="contact" icon={<PhoneOutlined />}>
+              <Link to="/contact">Contact</Link>
+            </MenuItem>
+          </Menu>
         </Sider>
         <Layout className="site-layout">
           <Header
@@ -64,7 +68,7 @@ const MainLayout = () => {
               minHeight: 280,
             }}
           >
-            <PropsContent/>
+            <PropsContent />
           </Content>
         </Layout>
       </Layout>

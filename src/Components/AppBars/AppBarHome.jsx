@@ -3,6 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import React, { useRef, useState, useMemo } from "react";
 import Highlighter from "react-highlight-words";
 import generateUser from "../../Utils/GenerateUser";
+import { useNavigate } from "react-router-dom";
 
 const AppBarHome = () => {
   const [searchText, setSearchText] = useState("");
@@ -13,6 +14,8 @@ const AppBarHome = () => {
     inputed: 40,
     totalUser: null,
   });
+
+  const navigate = useNavigate();
 
   const data = useMemo(() => {
     return state.totalUser
@@ -174,20 +177,32 @@ const AppBarHome = () => {
     },
     {
       title: "Action",
-      key: "operation",
+      key: "id",
       fixed: "right",
       width: 100,
-      render: () => <>action</>,
+      render: (_, record) => {
+        return (
+          <>
+            <Button
+              type="link"
+              onClick={() => navigate(`/detail/${record.key}`)}
+            >
+              Detail
+            </Button>
+          </>
+        );
+      },
     },
   ];
 
-  const { Text } = Typography;
+  const { Text, Title } = Typography;
 
   return (
     <>
-      <Space style={{  marginBottom: "20px"}}>
+      <Space style={{ marginBottom: "20px" }} direction="vertical">
+        <Title level={4}>List Employee</Title>
         <Space direction="vertical">
-          <Text>Lets do magic</Text>
+          <Text>Lets do magic (You can generated random user here)</Text>
           <Input.Group compact>
             <Input
               style={{
